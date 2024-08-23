@@ -1,0 +1,5 @@
+name: Pull request trigger
+run-name: develop CI run by ${{ github.actor}}
+
+on:
+  pull_request:
