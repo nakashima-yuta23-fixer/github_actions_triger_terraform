@@ -23,4 +23,5 @@ jobs:
     steps:
       - run: echo "This is Test Job!!"
       - run: export MY_NAME="Hoge"
-      - run: export Age=20
+      - run: export AGE=20
+      - run: echo $MY_NAME $AGE
