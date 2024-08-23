@@ -22,3 +22,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "This is Test Job!!"
+      - run: export MY_NAME="Hoge"
+      - run: export Age=20
