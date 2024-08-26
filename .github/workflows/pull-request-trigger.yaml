@@ -47,10 +47,16 @@ jobs:
         env:
           TFCMT_VERSION: "4.11.0"
 
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CREDENTIALS }}
+
       # tfstateの準備
       - name: Set Env
         shell: bash
         run: |
+          az account show
           echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
           echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
           echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
@@ -60,7 +66,6 @@ jobs:
         shell: bash
         run: |
           cd $GITHUB_WORKSPACE/terraform
-          az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
           terragrunt run-all plan
           # terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/files/tfcmt-with-terragrunt/tfwrapper.sh
         # env:
