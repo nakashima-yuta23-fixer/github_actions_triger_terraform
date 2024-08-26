@@ -13,7 +13,8 @@ on:
     paths:
       - terraform/**
 
-# permissions:
+permissions:
+  issues: write
 
 jobs:
   pull_request-triger:
