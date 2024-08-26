@@ -57,7 +57,6 @@ jobs:
       - name: Set Env
         shell: bash
         run: |
-          az account show
           echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
           echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
           echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
@@ -67,7 +66,7 @@ jobs:
         shell: bash
         run: |
           cd $GITHUB_WORKSPACE/terraform
-          terragrunt run-all plan
+          terragrunt run-all plan --terragrunt-non-interactive
           # terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/files/tfcmt-with-terragrunt/tfwrapper.sh
         # env:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
