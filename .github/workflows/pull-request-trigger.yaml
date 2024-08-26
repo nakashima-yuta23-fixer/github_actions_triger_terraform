@@ -4,7 +4,7 @@ run-name: develop CI run by ${{ github.actor}}
 on:
   pull_request:
     branches:
-      - main
+      - develop
     types:
       - opened
       - synchronize
