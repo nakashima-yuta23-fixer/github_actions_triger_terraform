@@ -1,5 +1,65 @@
-# name: Pull request trigger
-# run-name: develop CI run by ${{ github.actor}}
+name: Pull request trigger
+run-name: develop CI run by ${{ github.actor}}
 
-# on:
-#   pull_request:
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+    paths:
+      - terraform/**
+
+# permissions:
+
+jobs:
+  pull_request-triger:
+    # environtment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository ${{ github.repository }}
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform:version: "1.9.1"
+
+      - name: Setup Terragrunt
+        shell: bash
+        run: |
+          wget "https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}/terragrunt_linux_amd64" -O /usr/local/bin/terragrunt -q
+          chmod +x /usr/local/bin/terragrunt
+          terragrunt --version
+        env:
+          TG_VERSION: "0.63.1"
+
+      - name: Setup tfcmt
+        shell: bash
+        run: |
+          wget "https://github.com/suzuki-shunsuke/tfcmt/releases/download/v${TFCMT_VERSION}/tfcmt_linux_amd64.tar.gz" -O /tmp/tfcmt.tar.gz -q
+          tar xzf /tmp/tfcmt.tar.gz -C /tmp
+          mv /tmp/tfcmt /usr/local/bin
+          tfcmt --version
+        env:
+          TFCMT_VERSION: "4.11.0"
+
+      # tfstateの準備
+      - name: Set Env
+        shell: bash
+        run: |
+          echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+          echo "AZURE_SUBSCRIPTION_TENANT_ID=${{ secrets.AZURE_SUBSCRIPTION_TENANT_ID }}" >> $GITHUB_ENV
+          echo "AZURE_SUBSCRIPTION_CLIENT_ID=${{ secrets.AZURE_SUBSCRIPTION_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "AZURE_SUBSCRIPTION_CLIENT_SECRET=${{ secrets.AZURE_SUBSCRIPTION_CLIENT_SECRET }}" >> $GITHUB_ENV
+
+      - name: Terragrunt run-all plan
+        shell: bash
+        run: |
+          cd $GITHUB_WORKSPACE/terraform
+          terragrunt run-all plan
+          # terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/files/tfcmt-with-terragrunt/tfwrapper.sh
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
