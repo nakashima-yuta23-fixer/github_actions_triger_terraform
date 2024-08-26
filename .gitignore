@@ -21,3 +21,5 @@ _*.tf
 **/*.lock.hcl
 .terragrunt-cache
 env
+backend.tf
+provider.tf
