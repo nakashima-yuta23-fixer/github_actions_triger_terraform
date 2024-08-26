@@ -60,6 +60,7 @@ jobs:
         shell: bash
         run: |
           cd $GITHUB_WORKSPACE/terraform
+          az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
           terragrunt run-all plan
           # terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/files/tfcmt-with-terragrunt/tfwrapper.sh
         # env:
