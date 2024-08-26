@@ -51,9 +51,9 @@ jobs:
         shell: bash
         run: |
           echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
-          echo "AZURE_SUBSCRIPTION_TENANT_ID=${{ secrets.AZURE_SUBSCRIPTION_TENANT_ID }}" >> $GITHUB_ENV
-          echo "AZURE_SUBSCRIPTION_CLIENT_ID=${{ secrets.AZURE_SUBSCRIPTION_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "AZURE_SUBSCRIPTION_CLIENT_SECRET=${{ secrets.AZURE_SUBSCRIPTION_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
+          echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}" >> $GITHUB_ENV
 
       - name: Terragrunt run-all plan
         shell: bash
