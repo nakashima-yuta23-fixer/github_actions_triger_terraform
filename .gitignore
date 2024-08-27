@@ -18,6 +18,8 @@ terraform.rc
 
 # Ignore Terragrunt files
 _*.tf
+backend.tf
+provider.tf
 **/*.lock.hcl
 .terragrunt-cache
 env
