@@ -1,22 +1,20 @@
-name: Pull request trigger
-run-name: develop CI run by ${{ github.actor }}
+name: Merge trigger
+run-name: develop CD run by ${{ github.actor }}
 
 on:
   pull_request:
     branches:
       - main
       - develop
-      - feature/*
     types:
-      - opened
-      - synchronize
+      - closed
     paths:
       - terraform/**
 
 # permissions:
 
 jobs:
-  pull_request-triger:
+  merge-trigger:
     # environtment:
     runs-on: ubuntu-latest
 
@@ -61,11 +59,15 @@ jobs:
           echo "ARM_CLIENT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .clientId -r)" >> $GITHUB_ENV
           echo "ARM_CLIENT_SECRET=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .clientSecret -r)" >> $GITHUB_ENV
 
-      - name: Terragrunt run-all plan
+      - name: Terragrunt run-all apply
         shell: bash
         run: |
+          # cd $GITHUB_WORKSPACE/.github/workflows/terraform
+          cd $GITHUB_WORKSPACE
+          ls
           cd $GITHUB_WORKSPACE/terraform
-          terragrunt run-all plan --terragrunt-non-interactive
+          terragrunt run-all apply --terragrunt-non-interactive
           # terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/files/tfcmt-with-terragrunt/tfwrapper.sh
         # env:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
