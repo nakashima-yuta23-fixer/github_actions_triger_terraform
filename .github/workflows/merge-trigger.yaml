@@ -4,18 +4,24 @@ run-name: develop CD run by ${{ github.actor }}
 on:
   pull_request:
     branches:
+      # ! ブランチ戦略に従って変更する必要あり(リストに追加したブランチに対しての操作がトリガーとなる)
       - main
       - develop
+      - feature/*
     types:
       - closed
     paths:
+      # ! Terraformのディレクトリ構成に従って変更する必要あり
       - terraform/**
 
-# permissions:
+permissions:
+  id-token: write
+  contents: read
+  # pull-requests: write
 
 jobs:
   merge-trigger:
-    # environtment:
+    # environtment: development
     runs-on: ubuntu-latest
 
     steps:
@@ -61,13 +67,11 @@ jobs:
 
       - name: Terragrunt run-all apply
         shell: bash
+        # ! ↓ cdコマンドで移動する先に開発用のTerraformのルートterragrunt.hclがある場所に移動する必要がある
         run: |
-          # cd $GITHUB_WORKSPACE/.github/workflows/terraform
-          cd $GITHUB_WORKSPACE
-          ls
           cd $GITHUB_WORKSPACE/terraform
-          terragrunt run-all apply --terragrunt-non-interactive
-          # terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/files/tfcmt-with-terragrunt/tfwrapper.sh
+          # terragrunt run-all apply --terragrunt-non-interactive
+          terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
         # env:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

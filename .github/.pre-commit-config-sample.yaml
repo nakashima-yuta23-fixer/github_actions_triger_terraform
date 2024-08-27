@@ -1,0 +1,13 @@
+repos:
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.92.0
+    hooks:
+      - id: terragrunt_fmt
+
+  - repo: local
+    hooks:
+      - id: git-secrets
+        name: git secrets
+        entry: git secrets --scan
+        language: system
+        types: [text]
