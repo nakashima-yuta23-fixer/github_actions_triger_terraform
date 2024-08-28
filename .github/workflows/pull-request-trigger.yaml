@@ -51,9 +51,9 @@ jobs:
           mv /tmp/tfcmt /usr/local/bin
           tfcmt --version
           echo "HOGE=${{ vars.HOGE }}" >> $GITHUB_ENV
-          echo $HOGE
           echo "${{ vars.HOGE }}"
           echo "HEllO"
+          echo $HOGE
         env:
           TFCMT_VERSION: "4.13.0"
 
