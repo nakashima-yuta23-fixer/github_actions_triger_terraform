@@ -51,7 +51,7 @@ jobs:
           mv /tmp/tfcmt /usr/local/bin
           tfcmt --version
         env:
-          TFCMT_VERSION: "4.11.0"
+          TFCMT_VERSION: "4.13.0"
 
       - name: Log in with Azure
         uses: azure/login@v1
@@ -71,9 +71,8 @@ jobs:
         # ! ↓ cdコマンドで移動する先に開発用のTerraformのルートterragrunt.hclがある場所に移動する必要がある
         run: |
           cd $GITHUB_WORKSPACE/terraform
-          terragrunt run-all plan --terragrunt-non-interactive
-          # terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
+          # terragrunt run-all plan --terragrunt-non-interactive
+          terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-
