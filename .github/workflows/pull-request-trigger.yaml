@@ -15,10 +15,10 @@ on:
       # ! Terraformのディレクトリ構成に従って変更する必要あり
       - terraform/**
 
-# permissions:
-#   id-token: write
-#   contents: read
-#   pull-requests: write
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
 
 jobs:
   pull_request-triger:
@@ -74,4 +74,5 @@ jobs:
           # terragrunt run-all plan --terragrunt-non-interactive
           terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
