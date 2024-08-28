@@ -50,6 +50,7 @@ jobs:
           tar xzf /tmp/tfcmt.tar.gz -C /tmp
           mv /tmp/tfcmt /usr/local/bin
           tfcmt --version
+          echo "HOGE=${{ vars.HOGE }}" >> $GITHUB_ENV
           echo $HOGE
           echo "HEllO"
         env:
