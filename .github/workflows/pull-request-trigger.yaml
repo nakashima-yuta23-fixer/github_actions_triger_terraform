@@ -15,10 +15,10 @@ on:
       # ! Terraformのディレクトリ構成に従って変更する必要あり
       - terraform/**
 
-permissions:
-  id-token: write
-  contents: read
-  pull-requests: write
+# permissions:
+#   id-token: write
+#   contents: read
+#   pull-requests: write
 
 jobs:
   pull_request-triger:
