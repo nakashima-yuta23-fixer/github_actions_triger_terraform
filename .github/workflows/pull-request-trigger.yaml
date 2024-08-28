@@ -50,10 +50,6 @@ jobs:
           tar xzf /tmp/tfcmt.tar.gz -C /tmp
           mv /tmp/tfcmt /usr/local/bin
           tfcmt --version
-          echo "HOGE=${{ vars.HOGE }}" >> $GITHUB_ENV
-          echo "${{ vars.HOGE }}"
-          echo "HEllO"
-          echo $HOGE
         env:
           TFCMT_VERSION: "4.13.0"
 
@@ -62,11 +58,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: setup for remote terraform module
+        shell: bash
+        # todo: PAT を使わずに別リポのモジュールを呼び出せるようにする
+        run: git config --global url."https://oauth2:${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}@github.com/fixer-github".insteadOf https://github.com/fixer-github
+
       - name: Set env of Terraform service principal 
         shell: bash
         run: |
-          echo "Hello"
-          echo $HOGE
           echo "ARM_SUBSCRIPTION_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .subscriptionId -r)" >> $GITHUB_ENV
           echo "ARM_TENANT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .tenantId -r)" >> $GITHUB_ENV
           echo "ARM_CLIENT_ID=$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq .clientId -r)" >> $GITHUB_ENV

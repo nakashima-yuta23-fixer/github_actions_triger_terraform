@@ -1,5 +1,7 @@
-# 開発環境構築
+# 前提
 ※ 前提としてPowerShellで実行することを想定している。
+
+# 開発環境構築
 ## 本リポジトリのクローン
 ```powershell
 git clone {ここにリポジトリのURLを載せる}
@@ -39,4 +41,13 @@ git secrets --register-azure
 5. 動作確認
 ```powershell
 pre-commit run -a
+```
+
+# ローカルの Powershell で Terragrunt を実行する前準備
+下記のコマンドを使用してPowerShellの環境変数にリソース構築環境を対象とするサービスプリンシパルの値を登録する。※
+```powershell
+$ENV:ARM_SUBSCRIPTION_ID = ${サービスプリンシパルのサブスクリプションID}
+$ENV:ARM_TENANT_ID = ${サービスプリンシパルのテナントID}
+$ENV:ARM_CLIENT_ID = ${サービスプリンシパルのクライアントID}
+$ENV:ARM_CLIENT_SECRET = ${サービスプリンシパルのクライアントシークレット}
 ```
