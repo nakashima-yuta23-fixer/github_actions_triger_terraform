@@ -52,6 +52,7 @@ jobs:
           tfcmt --version
           echo "HOGE=${{ vars.HOGE }}" >> $GITHUB_ENV
           echo $HOGE
+          echo "${{ vars.HOGE }}"
           echo "HEllO"
         env:
           TFCMT_VERSION: "4.13.0"
