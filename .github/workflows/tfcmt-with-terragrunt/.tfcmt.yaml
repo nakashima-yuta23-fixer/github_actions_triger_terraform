@@ -129,6 +129,8 @@ terraform:
         {{template "guide_apply_parse_error" .}}
 
         It failed to parse the result.
+        @mizoguchi-haruto22-fixer 
+        @nakashima-yuta23-fixer
 
         <details><summary>Details (Click me)</summary>
         {{wrapCode .CombinedOutput}}
