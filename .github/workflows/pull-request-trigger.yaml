@@ -4,6 +4,7 @@ run-name: develop CI run by ${{ github.actor }}
 on:
   pull_request:
     branches:
+      # ! ブランチ戦略に従って変更する必要あり(リストに追加したブランチに対しての操作がトリガーとなる)
       - main
       - develop
       - feature/*
@@ -11,13 +12,17 @@ on:
       - opened
       - synchronize
     paths:
+      # ! Terraformのディレクトリ構成に従って変更する必要あり
       - terraform/**
 
-# permissions:
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
 
 jobs:
   pull_request-triger:
-    # environtment:
+    environment: development
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +41,7 @@ jobs:
           chmod +x /usr/local/bin/terragrunt
           terragrunt --version
         env:
-          TG_VERSION: "0.63.1"
+          TG_VERSION: "0.66.9"
 
       - name: Setup tfcmt
         shell: bash
@@ -46,7 +51,7 @@ jobs:
           mv /tmp/tfcmt /usr/local/bin
           tfcmt --version
         env:
-          TFCMT_VERSION: "4.11.0"
+          TFCMT_VERSION: "4.13.0"
 
       - name: Log in with Azure
         uses: azure/login@v1
@@ -63,9 +68,10 @@ jobs:
 
       - name: Terragrunt run-all plan
         shell: bash
+        # ! ↓ cdコマンドで移動する先に開発用のTerraformのルートterragrunt.hclがある場所に移動する必要がある
         run: |
           cd $GITHUB_WORKSPACE/terraform
-          terragrunt run-all plan --terragrunt-non-interactive
-          # terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/files/tfcmt-with-terragrunt/tfwrapper.sh
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          chmod +x $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
+          terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-terragrunt_version_constraint = "~> 0.63.1"
+terragrunt_version_constraint = "~> 0.66.9"
 
 locals {
   subscription_id = get_env("ARM_SUBSCRIPTION_ID")
