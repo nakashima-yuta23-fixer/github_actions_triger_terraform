@@ -70,8 +70,8 @@ jobs:
         # ! ↓ cdコマンドで移動する先に開発用のTerraformのルートterragrunt.hclがある場所に移動する必要がある
         run: |
           cd $GITHUB_WORKSPACE/terraform
-          # terragrunt run-all apply --terragrunt-non-interactive
+          chmod +x $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
           terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
