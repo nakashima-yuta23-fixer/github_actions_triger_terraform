@@ -74,4 +74,3 @@ jobs:
           terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

@@ -8,8 +8,8 @@ git clone {ここにリポジトリのURLを載せる}
 ```
 
 ## Terraform, Terragruntのインストール
-- Terraformのインストールは![こちら](Install Terraform)の公式ドキュメントを参考にする
-- Terragruntのインストールは![こちら](https://terragrunt.gruntwork.io/docs/getting-started/install/)の公式ドキュメントを参考にする
+- Terraformのインストールは[こちら](https://developer.hashicorp.com/terraform/install)の公式ドキュメントを参考にする
+- Terragruntのインストールは[こちら](https://terragrunt.gruntwork.io/docs/getting-started/install/)の公式ドキュメントを参考にする
 
 ## pre-commitの導入
 1. Windows環境にて、pre-commitをインストールする.（Python3、Pip3を使用するので、これらが未インストールであれば、先にインストールする）
