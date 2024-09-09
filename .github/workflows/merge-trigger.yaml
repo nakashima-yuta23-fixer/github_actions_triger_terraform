@@ -71,6 +71,6 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/terraform
           chmod +x $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
-          terragrunt run-all plan --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
+          terragrunt run-all apply --terragrunt-non-interactive --terragrunt-tfpath $GITHUB_WORKSPACE/.github/workflows/tfcmt-with-terragrunt/tfwrapper.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
